@@ -2,39 +2,31 @@ let socket = io();
 let messages = document.querySelector("section ul");
 let input = document.querySelector("input");
 
-document.querySelector("form").addEventListener("submit", (event) => {
+const usernameSection = document.querySelector(".index");
+const formName = document.querySelector("section > form");
+const username = document.querySelector("#name");
+
+const usernames = document.querySelector("header ul");
+
+const users = (user) => {
+  const li = document.createElement("li");
+  li.setAttribute("id", `text${user.id}`);
+  li.innerHTML = `<p>${user.username}</p>`;
+  usernames.appendChild(li);
+};
+
+const submitUser = (user) => {
   event.preventDefault();
-  if (input.value) {
-    socket.emit("message", input.value);
+  const value = input.value;
+  
+    socket.emit("name", value);
     input.value = "";
-  }
-});
+    // usernameSection
+  };
 
-socket.on("message", (message) => {
-  addMessage(message);
-});
+const handleName = (user) => {
+  users(user);
+};
 
-socket.on("history", (history) => {
-  history.forEach((message) => {
-    addMessage(message);
-  });
-});
+formName.addEventListener("submit", submitUser);
 
-function addMessage(message) {
-  messages.appendChild(
-    Object.assign(document.createElement("li"), { textContent: message })
-  );
-  messages.scrollTop = messages.scrollHeight;
-}
-
-formName.addEventListener("submit", (event) => {
-  event.preventDefault();
-  if (input.value) {
-    socket.emit("name", input.value);
-    input.value = "";
-    if (username.length > 0) {
-      //Emit to the server the new user
-      socket.emit("new user", username);
-    }
-  }
-});

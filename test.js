@@ -77,12 +77,16 @@ const userList = []
 io.on('connection', socket => {
   console.log('a user connected')
 
-  const handleName = name => {
+  const handleUsername = name => {
     const user = { username: name, id: socket.id }
     userList.push(user)
     console.log(userList)
     io.emit('name', { username: name, id: socket.id })
   }
+
+  // const handleRanking = ranking => {
+  //   io.emit('ranking', { id: socket.id, amount: ranking })
+  // }
 
   const handleDisconnect = () => {
     io.emit('user left', { id: socket.id })
@@ -100,10 +104,51 @@ io.on('connection', socket => {
   }
 
   socket.on('name', handleName)
+  socket.on('ranking', handleRanking)
   socket.on('disconnect', handleDisconnect)
-  // console.log(userList)
+  console.log(userList)
 })
 
 http.listen(port, () => {
   console.log('listening on port ', port)
 })
+
+// script.ejs
+
+// document.querySelector("form").addEventListener("submit", (event) => {
+//   event.preventDefault();
+//   if (input.value) {
+//     socket.emit("message", input.value);
+//     input.value = "";
+//   }
+// });
+
+// socket.on("message", (message) => {
+//   addMessage(message);
+// });
+
+// socket.on("history", (history) => {
+//   history.forEach((message) => {
+//     addMessage(message);
+//   });
+// });
+
+// function addMessage(message) {
+//   messages.appendChild(
+//     Object.assign(document.createElement("li"), { textContent: message })
+//   );
+//   messages.scrollTop = messages.scrollHeight;
+// }
+
+// formName.addEventListener("submit", (event) => {
+//   event.preventDefault();
+//   if (input.value) {
+//     socket.emit("name", input.value);
+//     input.value = "";
+//     if (username.length > 0) {
+//       //Emit to the server the new user
+//       socket.emit("new user", username);
+//     }
+//   }
+// });
+

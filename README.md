@@ -1,16 +1,22 @@
 # Real-Time Web @cmda-minor-web 2022 - 2023
  # Trivia
 
-
- To-do
+must have
  [] Username input in chat
- [] Add API questions to chat one at a time
- [] Player list
- [] Ranking system
- [] User has left the chat
- [] Multiple chat rooms per category
- [] Difficulty Easy/Medium/Hard
- 
+ [] Create userlist
+ [] Update userlist
+ [] Fetch trivia questions from API
+
+should have
+[] User has left the chat
+[] Add API questions to chat one at a time
+[] Ranking system
+
+could have
+[] Multiple chat rooms per category
+[] Difficulty Easy/Medium/Hard
+
+won't have
  
 
 <!-- Here are some hints for your projects Readme.md! -->

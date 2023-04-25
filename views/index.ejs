@@ -1,4 +1,16 @@
 <%- include('partials/head'); %> 
+<header>
+    <h1>Trivia</h1>
+    <ul>
+        <h3>Userlist:</h3>
+        <% userList.forEach(name => { %>   
+         <li id="text<%- name.id %>">
+             <p><%- name.username %></p>
+         </li>
+        <% }) %>
+    </ul>
+</header>
+
     <section class="index">
         <form action="" id="formName">
             <label for="name">Username</label>
