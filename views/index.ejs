@@ -1,31 +1,39 @@
-<%- include('partials/head'); %> 
+<%- include('partials/head'); %>
+<!-- <section class="chat">
+  <h1>Chat</h1>
+  <ul></ul>
+  <form action="" id="formChat">
+    <input type="text" autocomplete="off" />
+    <button><span>Send</span></button>
+  </form>
+</section>
+-->
+
 <header>
-    <h1>Trivia</h1>
-    <ul>
-        <h3>Userlist:</h3>
-        <% userList.forEach(name => { %>   
-         <li id="text<%- name.id %>">
-             <p><%- name.username %></p>
-         </li>
-        <% }) %>
-    </ul>
+  <h1>Trivia game</h1>
+  <ul>
+    <h3>Connected players:</h3>
+    <ul id="user-list">
+      <% userList.forEach(function(user) { %>
+        <li><%= user %> (score: <%= scores[user] || 0 %>)</li>
+      <% }); %>
+    </ul> 
+
 </header>
 
-    <section class="index">
-        <form action="" id="formName">
-            <label for="name">Username</label>
-            <input type="text" name="name" id="name">
-            <input type="submit" value="Begin quiz!">
-        </form>
-    </section>
+<section class="chat">
+  <h1>Chat</h1>
+  <ul></ul>
+  <form action="" id="formChat">
+    <input type="text" autocomplete="off" />
+    <button><span>Send</span></button>
+  </form>
+</section>
 
-    <section>
-        <h1>Chat</h1>
-        <ul></ul>
-        <form>
-            <input type="text" autocomplete="off">
-            <button><span>Send</span></button>
-        </form>
-    </section>
+<section class="trivia">
+  <h2>Trivia Question:</h2>
+  <p id="question"></p>
+  <div id="answers"></div>
+</section>
 
-<%- include('partials/footer'); %> 
+<%- include('partials/footer'); %>
