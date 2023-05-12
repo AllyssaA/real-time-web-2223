@@ -1,22 +1,50 @@
-# Real-Time Web @cmda-minor-web 2022 - 2023
- # Trivia
+# Trivia Game
+This is the repository for the Real-Time Web 2223 project. The project is a real-time web application that allows users to join a chat and play a trivia game together. The application is built using Node.js, Express and Socket.IO.
+![Trivia Game screenshot](https://github.com/AllyssaA/real-time-web-2223/blob/main/static/img/trivia-game.png)
+
+# Live Demo
+[Trivia Game](https://trivia-game.adaptable.app/)
+
+# Concept
+A trivia game with a chat feature where multiple users can connect and chat with each other while playing. The first user who gets 5 points wins. 
+
+# Dependencies
+- EJs
+- Express
+- Node-fetch
+- Socket IO
+
+# Open Trivia DB API
+
+[Open Trivia DB API](https://opentdb.com/api_config.php)
+
+The Open Trivia DB API is used to fetch a set of trivia questions from a specific category (in this case, category ID 11 which is "Entertainment: Film") and generate a quiz game based on the questions returned from the API.
+
+When the server starts, it uses the fetch function to make a request to the Open Trivia DB API. The API sends back a JSON object with a list of trivia questions and their corresponding answers. The server then shuffles the answers using a method called the Fisher-Yates algorithm, and creates a question object for each question. Each question object includes the question text, correct answer, incorrect answers, and all answers shuffled. These question objects are then stored in an array called triviaQuestions. This array of shuffled trivia questions with correct and incorrect answers is used in the trivia game.
+
+# Data life cycle
+
+# Socket events
+
+
 
 must have
- [] Username input in chat
- [] Create userlist
- [] Update userlist
- [] Fetch trivia questions from API
+- [ ] incomplete task
+- [ ]  Username input in chat
+- [ ]  Create userlist
+- [ ]  Update userlist
+- [ ]  Fetch trivia questions from API
+- [ ]  Return trivia question to users
 
 should have
-[] User has left the chat
-[] Add API questions to chat one at a time
-[] Ranking system
+- [ ] User has left the chat
+- [ ] Ranking system
 
 could have
-[] Multiple chat rooms per category
-[] Difficulty Easy/Medium/Hard
+- [ ] Multiple chat rooms per category
+- [ ] Difficulty Easy/Medium/Hard
 
-won't have
+
  
 
 <!-- Here are some hints for your projects Readme.md! -->
