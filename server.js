@@ -9,6 +9,7 @@ const port = process.env.PORT || 5000;
 let triviaQuestions = [];
 let currentQuestion = null;
 const scores = {};
+const filteredWords = ["&#039;", "&quot;", "&#039;"];
 
 // Templating files
 app.set("views", "views");
@@ -30,13 +31,19 @@ const renderPage = (req, res) => {
       .then((response) => response.json())
       .then((data) => {
         data.results.forEach((result) => {
-          const allAnswers = shuffleArray([result.correct_answer].concat(
-            result.incorrect_answers)
+          const allAnswers = shuffleArray(
+            [result.correct_answer].concat(result.incorrect_answers)
           );
+
+          // Filter out words from the question and answers
+          const filteredQuestion = filterWords(result.question);
+          const filteredCorrectAnswer = filterWords(result.correct_answer);
+          const filteredIncorrectAnswers = result.incorrect_answers.map(filterWords);
+
           const question = {
-            question: result.question,
-            correctAnswer: result.correct_answer,
-            incorrectAnswers: result.incorrect_answers,
+            question: filteredQuestion,
+            correctAnswer: filteredCorrectAnswer,
+            incorrectAnswers: filteredIncorrectAnswers,
             allAnswers: allAnswers,
           };
           triviaQuestions.push(question);
@@ -58,6 +65,26 @@ const renderPage = (req, res) => {
   }
 };
 
+// &hellip;&rdquo;&#039;&quot;
+
+function filterWords(text) {
+  const regex = /&[a-zA-Z]+;/g;
+  return text.replace(regex, (match) => {
+    const entityMap = {
+      "&ldquo;": "“",
+      "&rdquo;": "”",
+      "&#039;": "'",
+      "&#039;": "''",
+      "&quot;": "\"",
+      // "&quot;": "THIS IS A TEST THAT THE FILTER IS WORKIN",
+      "&hellip;": "...",
+      "&eacute;": "é",
+      "&amp;": "&"
+    };
+    return entityMap[match] || "";
+  });
+}
+
 app.get("/", renderPage);
 
 const userList = [];
@@ -66,7 +93,7 @@ io.on("connection", (socket) => {
   console.log("a user connected");
 
   selectRandomQuestion();
-  socket.emit("newQuestion", currentQuestion)
+  socket.emit("newQuestion", currentQuestion);
 
   socket.on("newMsg", (message) => {
     io.emit("sendMessage", {
@@ -91,22 +118,21 @@ io.on("connection", (socket) => {
       } else {
         scores[socket.username]++;
       }
-  
+
       io.emit("correctAnswer", {
         user: socket.username,
         answer: answer,
-        scores: scores
+        scores: scores,
       });
-  
+
       sendNextQuestion();
     }
   });
-  
 
   function sendNextQuestion() {
     // Remove the current question from the triviaQuestions array
     triviaQuestions.splice(triviaQuestions.indexOf(currentQuestion), 1);
-  
+
     if (triviaQuestions.length === 0) {
       // If there are no more questions, end the game
       gameOver();
@@ -114,7 +140,7 @@ io.on("connection", (socket) => {
       // Get a random question from the triviaQuestions array
       const randomIndex = Math.floor(Math.random() * triviaQuestions.length);
       currentQuestion = triviaQuestions[randomIndex];
-  
+
       io.emit("newQuestion", currentQuestion);
     }
   }

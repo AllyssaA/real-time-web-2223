@@ -58,16 +58,27 @@ socket.on("newQuestion", (question) => {
 });
 
 socket.on("correctAnswer", (data) => {
-  messages.appendChild(
-    Object.assign(document.createElement("li"), {
-      textContent: `${data.user} guessed the correct answer (${
-        data.answer
-      })! Scores: ${JSON.stringify(data.scores)}`,
-      className: "system-message",
-    })
-  );
+  const liElement = document.createElement("li");
+  liElement.textContent = `${data.user} guessed the correct answer ${data.answer}! Scores: ${formatScores(data.scores)}`;
+  liElement.className = "system-message";
+  messages.appendChild(liElement);
+  messages.scrollTop = messages.scrollHeight;
+  
   messages.scrollTop = messages.scrollHeight;
 });
+
+function formatScores(scores) {
+  let formattedScores = "";
+  for (const username in scores) {
+    if (scores.hasOwnProperty(username)) {
+      const score = scores[username];
+      formattedScores += `${username}: ${score}, `;
+    }
+  }
+  // Remove the trailing comma and space
+  formattedScores = formattedScores.slice(0, -2);
+  return formattedScores;
+}
 
 socket.on("gameOver", ({ winner, scores, restart }) => {
   const message = winner
