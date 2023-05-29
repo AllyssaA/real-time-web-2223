@@ -1,6 +1,17 @@
 # Movie Trivia Showdown 
 This is the repository for the Real-Time Web 2223 project. The project is a real-time web application that allows users to join a chat and play a trivia game together. The application is built using Node.js, Express and Socket.IO.
+
 ![Trivia Game screenshot](https://raw.githubusercontent.com/AllyssaA/real-time-web-2223/main/static/img/Screenshot%202023-05-29%20at%2018.29.34.png)
+
+# Table of contents
+- [Live Demo](#live-demo)
+- [Concept](#concept)
+- [Dependencies](#dependencies)
+- [Open Trivia DB API](#open-trivia-db-api)
+- [Data life cycle](#data-life-cycle)
+- [Features](#features)
+- [Real time events](#real-time-events)
+- [MoSCoW](#moscow)
 
 # Live Demo
 [Adaptable](https://trivia-game.adaptable.app/)
@@ -37,9 +48,9 @@ Sending and Receiving Messages:
 - Received messages from other users are displayed in the chat window by appending list items to the <ul> element.
  
 User Registration and User List Update:
-- Upon loading the page, the code prompts the user to enter a username using window.prompt().
-- The entered username is emitted to the server as a "newUser" event.
-- The server maintains a list of online users, and when a user joins or leaves the chat, the updated user list is received by the client and displayed on the page.
+  - Upon loading the page, the code prompts the user to enter a username using window.prompt().
+  - The entered username is emitted to the server as a "newUser" event.
+  - The server maintains a list of online users, and when a user joins or leaves the chat, the updated user list is received by the client and displayed on the page.
  
 Question Handling:
  - When a new question is received from the server, it is displayed on the page.
@@ -80,6 +91,8 @@ Server side socket events
 - socket.on("answerSelected", (answer) => {...}): Listens for an "answerSelected" event from the client and checks if the selected answer is correct, updating scores and emitting a "correctAnswer" event.
 - socket.on("disconnect", () => {...}): Listens for a "disconnect" event from the client and removes the disconnected user from the user list.
 
+  
+# MoSCoW
 
 must have
 - [x]  Username input in chat
