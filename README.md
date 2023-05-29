@@ -27,6 +27,42 @@ When the server starts, it uses the fetch function to make a request to the Open
 # Data life cycle
 ![Data life cycle](https://raw.githubusercontent.com/AllyssaA/real-time-web-2223/c0de2dae2fc1d925b55db9fb5adde9b7809be32f/static/img/datalifecycle.png)
 
+# Features
+
+Establishing Socket Connection:
+- The code initializes a socket connection with the server using io().
+  
+Sending and Receiving Messages:
+- The code listens for form submissions and sends messages to the server via the socket connection when the form is submitted.
+- Received messages from other users are displayed in the chat window by appending list items to the <ul> element.
+ 
+User Registration and User List Update:
+- Upon loading the page, the code prompts the user to enter a username using window.prompt().
+- The entered username is emitted to the server as a "newUser" event.
+- The server maintains a list of online users, and when a user joins or leaves the chat, the updated user list is received by the client and displayed on the page.
+ 
+Question Handling:
+ - When a new question is received from the server, it is displayed on the page.
+ - The code dynamically creates buttons for each answer option and attaches click event listeners to them.
+ - When a player selects an answer, the chosen answer is emitted to the server as an "answerSelected" event.
+
+Correct Answer and Score Update:
+- If a player selects the correct answer, the server sends a "correctAnswer" event to notify all clients.
+- The correct answer, the user who guessed correctly, and the updated scores are displayed in the chat window.
+
+Game Over and Restart:
+- When the game ends (no more questions), the server sends a "gameOver" event to all clients, indicating the winner and the final scores.
+- The question and answer elements are removed from the page, and a game over message is displayed.
+- If the game is set to restart, a restart button is added, allowing players to restart the game by emitting a "restartGame" event to the server. (doesn't work yet)
+
+Server-side Functionality:
+- The server is implemented using Express.js.
+- It serves the static files (HTML, CSS, JavaScript) and uses EJS as the template engine.
+- The server fetches trivia questions from an API and stores them in the triviaQuestions array.
+- The server handles socket events such as new messages, new users, answer selection, and disconnection.
+- It keeps track of scores, selects random questions, and handles game over conditions.
+
+ 
 # Real time events
 Client side socket events
 - socket.emit("newUser", username): Emits a "newUser" event to the server with the provided username when a new user joins the game.
